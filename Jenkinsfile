@@ -40,7 +40,12 @@ spec:
             steps {
                 // Execute commands inside the 'php' container
                 container('php') {
-                    sh 'composer install'
+                    sh """
+                    # Download and install Composer
+                    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+                    # Install dependencies
+                    composer install
+                    """
                 }
             }
         }
