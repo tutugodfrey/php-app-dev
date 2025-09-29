@@ -25,7 +25,7 @@ spec:
 
     environment {
         // Assumes a credential with this ID is configured in Jenkins
-        SONAR_TOKEN = credentials('SONAR_TOKEN') 
+        SONAR_TOKEN = credentials('sonar-test-project-dev') 
     }
 
     stages {
