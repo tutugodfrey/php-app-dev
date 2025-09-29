@@ -91,7 +91,7 @@ spec:
                         -Dsonar.projectKey=test-project-dev \\
                         -Dsonar.sources=. \\
                         -Dsonar.host.url=https://sonarqube.dev.compliantcloud.com \\
-                        -Dsonar.login=$SONAR_TOKEN \\
+                        -Dsonar.token=$SONAR_TOKEN \\
                         -Dsonar.php.coverage.reportPaths=build/logs/clover.xml
                     """
                 }
