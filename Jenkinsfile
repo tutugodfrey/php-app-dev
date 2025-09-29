@@ -60,21 +60,37 @@ spec:
 
         stage('SonarQube Scan') {
             steps {
-                // Use the official SonarScanner CLI image
-                script {
-                    docker.image('sonarsource/sonar-scanner-cli').inside {
-                        // Run the SonarQube scanner
-                        sh """
-                        sonar-scanner \
-                            -Dsonar.projectKey=test-project \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=https://sonarqube.dev.compliantcloud.com \
-                            -Dsonar.login=$SONAR_TOKEN \
-                            -Dsonar.php.coverage.reportPaths=build/logs/clover.xml
-                        """
-                    }
+                // Execute commands inside the 'sonar-scanner' container
+                container('sonar-scanner') {
+                    sh """
+                    sonar-scanner \\
+                        -Dsonar.projectKey=test-project \\
+                        -Dsonar.sources=. \\
+                        -Dsonar.host.url=https://sonarqube.dev.compliantcloud.com \\
+                        -Dsonar.login=$SONAR_TOKEN \\
+                        -Dsonar.php.coverage.reportPaths=build/logs/clover.xml
+                    """
                 }
             }
         }
+
+        // stage('SonarQube Scan') {
+        //     steps {
+        //         // Use the official SonarScanner CLI image
+        //         script {
+        //             docker.image('sonarsource/sonar-scanner-cli').inside {
+        //                 // Run the SonarQube scanner
+        //                 sh """
+        //                 sonar-scanner \
+        //                     -Dsonar.projectKey=test-project \
+        //                     -Dsonar.sources=. \
+        //                     -Dsonar.host.url=https://sonarqube.dev.compliantcloud.com \
+        //                     -Dsonar.login=$SONAR_TOKEN \
+        //                     -Dsonar.php.coverage.reportPaths=build/logs/clover.xml
+        //                 """
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
