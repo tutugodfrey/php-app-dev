@@ -41,6 +41,8 @@ spec:
                 // Execute commands inside the 'php' container
                 container('php') {
                     sh """
+                    # Install git and unzip, which are required by Composer
+                    apt-get update && apt-get install -y git unzip
                     # Download and install Composer
                     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                     # Install dependencies
