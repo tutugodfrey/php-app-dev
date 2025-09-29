@@ -1,5 +1,27 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            // Define a pod with the containers needed for the build
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: php
+    image: php:8.1-cli
+    command:
+    - sleep
+    args:
+    - 99d
+  - name: sonar-scanner
+    image: sonarsource/sonar-scanner-cli
+    command:
+    - sleep
+    args:
+    - 99d
+"""
+        }
+    }
 
     environment {
         // Assumes a credential with this ID is configured in Jenkins
