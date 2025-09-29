@@ -5,11 +5,30 @@ This is a simple PHP project to demonstrate how to set up code coverage with PHP
 ## Setup
 
 1. Install dependencies:
-   ```bash
+```bash
    composer install
-   ```
+```
 
 2. Run tests with code coverage:
-   ```bash
+```bash
    vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-   ```
+```
+
+
+```bash
+sonar.projectKey=test-project
+
+
+
+node {
+  stage('SCM') {
+    checkout scm
+  }
+  stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner';
+    withSonarQubeEnv() {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
+}
+```
