@@ -38,25 +38,42 @@ spec:
 
         stage('Install Dependencies') {
             steps {
-                // Use a PHP container to install dependencies
-                script {
-                    docker.image('php:8.1-cli').inside {
-                        sh 'composer install'
-                    }
+                // Execute commands inside the 'php' container
+                container('php') {
+                    sh 'composer install'
                 }
             }
         }
 
+        // stage('Install Dependencies') {
+        //     steps {
+        //         // Use a PHP container to install dependencies
+        //         script {
+        //             docker.image('php:8.1-cli').inside {
+        //                 sh 'composer install'
+        //             }
+        //         }
+        //     }
+        // }
+
         stage('Run Tests and Generate Coverage') {
             steps {
-                // Use a PHP container to run tests and generate coverage report
-                script {
-                    docker.image('php:8.1-cli').inside {
-                        sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
-                    }
+                // Execute commands inside the 'php' container
+                container('php') {
+                    sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
                 }
             }
         }
+        // stage('Run Tests and Generate Coverage') {
+        //     steps {
+        //         // Use a PHP container to run tests and generate coverage report
+        //         script {
+        //             docker.image('php:8.1-cli').inside {
+        //                 sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('SonarQube Scan') {
             steps {
