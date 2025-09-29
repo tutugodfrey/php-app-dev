@@ -88,7 +88,7 @@ spec:
                 container('sonar-scanner') {
                     sh """
                     sonar-scanner \\
-                        -Dsonar.projectKey=test-project \\
+                        -Dsonar.projectKey=test-project-dev \\
                         -Dsonar.sources=. \\
                         -Dsonar.host.url=https://sonarqube.dev.compliantcloud.com \\
                         -Dsonar.login=$SONAR_TOKEN \\
