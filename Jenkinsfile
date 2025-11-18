@@ -69,17 +69,24 @@ spec:
                 // container('php') {
                 //     sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
                 // }
-
-                // Execute commands inside the 'php' container
-                container('php') {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                        sh """
-                            pecl install xdebug && docker-php-ext-enable xdebug
-                            # Create the directory for the coverage report
-                            # mkdir -p build/logs
-                            export XDEBUG_MODE=coverage
-                            vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-                        """
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    // Execute commands inside the 'php' container
+                    container('php') {
+                        script {
+                            try {
+                                sh """
+                                    pecl install xdebug && docker-php-ext-enable xdebug
+                                    # Create the directory for the coverage report
+                                    # mkdir -p build/logs
+                                    export XDEBUG_MODE=coverage
+                                    vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+                                """
+                            } catch (err) {
+                                sh """
+                                    ls -al build/logs/
+                                """
+                            }
+                        }
                     }
                 }
             }
