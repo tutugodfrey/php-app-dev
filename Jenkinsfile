@@ -111,6 +111,11 @@ spec:
                         -Dsonar.token=$SONAR_TOKEN \\
                         -Dsonar.php.coverage.reportPaths=build/logs/clover.xml
                     """
+
+                    sh """
+                        pwd
+                        ls -al
+                    """
                 }
             }
         }
