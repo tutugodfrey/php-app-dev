@@ -76,7 +76,7 @@ spec:
                         sh """
                             pecl install xdebug && docker-php-ext-enable xdebug
                             # Create the directory for the coverage report
-                            mkdir -p build/logs
+                            # mkdir -p build/logs
                             export XDEBUG_MODE=coverage
                             vendor/bin/phpunit --coverage-clover build/logs/clover.xml
                         """
