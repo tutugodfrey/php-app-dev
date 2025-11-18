@@ -78,8 +78,6 @@ spec:
                             # Create the directory for the coverage report
                             mkdir -p build/logs
                             export XDEBUG_MODE=coverage
-                            // xdebug-enable
-                            xdebug on
                             vendor/bin/phpunit --coverage-clover build/logs/clover.xml
                         """
                     }
