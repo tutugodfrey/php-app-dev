@@ -73,7 +73,12 @@ spec:
                 // Execute commands inside the 'php' container
                 container('php') {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                        sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
+                        sh """
+                            export XDEBUG_MODE=coverage
+                            // xdebug-enable
+                            xdebug on
+                            vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+                        """
                     }
                 }
             }
@@ -93,6 +98,11 @@ spec:
             steps {
                 // Execute commands inside the 'sonar-scanner' container
                 container('sonar-scanner') {
+                    sh """
+                        pwd
+                        ls -al
+                    """
+
                     sh """
                     sonar-scanner \\
                         -Dsonar.projectKey=test-project-dev \\
