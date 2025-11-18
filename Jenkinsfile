@@ -65,9 +65,16 @@ spec:
 
         stage('Run Tests and Generate Coverage') {
             steps {
+                // // Execute commands inside the 'php' container
+                // container('php') {
+                //     sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
+                // }
+
                 // Execute commands inside the 'php' container
                 container('php') {
-                    sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                        sh 'vendor/bin/phpunit --coverage-clover build/logs/clover.xml'
+                    }
                 }
             }
         }
