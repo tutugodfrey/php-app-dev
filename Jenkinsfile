@@ -75,6 +75,8 @@ spec:
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         sh """
                             pecl install xdebug && docker-php-ext-enable xdebug
+                            # Create the directory for the coverage report
+                            mkdir -p build/logs
                             export XDEBUG_MODE=coverage
                             // xdebug-enable
                             xdebug on
@@ -102,6 +104,7 @@ spec:
                     sh """
                         pwd
                         ls -al
+                        ls -al build/logs
                     """
 
                     sh """
