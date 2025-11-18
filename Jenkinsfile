@@ -74,6 +74,7 @@ spec:
                 container('php') {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         sh """
+                            pecl install xdebug && docker-php-ext-enable xdebug
                             export XDEBUG_MODE=coverage
                             // xdebug-enable
                             xdebug on
